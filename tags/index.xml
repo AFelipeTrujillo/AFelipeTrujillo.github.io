@@ -1,103 +1,30 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on A. Felipe Trujillo</title>
-    <link>https://afelipetrujillo.github.io/tags/</link>
-    <description>Recent content in Tags on A. Felipe Trujillo</description>
+    <title>Tags on AFelipeTrujillo&#39;s Blog</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on AFelipeTrujillo&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
-    <lastBuildDate>Sat, 13 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <language>en-us</language>
     
-	<atom:link href="https://afelipetrujillo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Ajedrez</title>
-      <link>https://afelipetrujillo.github.io/tags/ajedrez/</link>
-      <pubDate>Sat, 13 Apr 2019 00:00:00 +0000</pubDate>
+      <title>Chess</title>
+      <link>http://localhost:1313/tags/chess/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://afelipetrujillo.github.io/tags/ajedrez/</guid>
+      <guid>http://localhost:1313/tags/chess/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Arduio</title>
-      <link>https://afelipetrujillo.github.io/tags/arduio/</link>
-      <pubDate>Sat, 13 Apr 2019 00:00:00 +0000</pubDate>
+      <title>Opening</title>
+      <link>http://localhost:1313/tags/opening/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://afelipetrujillo.github.io/tags/arduio/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>StockFish</title>
-      <link>https://afelipetrujillo.github.io/tags/stockfish/</link>
-      <pubDate>Sat, 13 Apr 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://afelipetrujillo.github.io/tags/stockfish/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>projects</title>
-      <link>https://afelipetrujillo.github.io/tags/projects/</link>
-      <pubDate>Sun, 02 Oct 2016 22:55:05 -0400</pubDate>
-      
-      <guid>https://afelipetrujillo.github.io/tags/projects/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>development</title>
-      <link>https://afelipetrujillo.github.io/tags/development/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://afelipetrujillo.github.io/tags/development/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>go</title>
-      <link>https://afelipetrujillo.github.io/tags/go/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://afelipetrujillo.github.io/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>golang</title>
-      <link>https://afelipetrujillo.github.io/tags/golang/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://afelipetrujillo.github.io/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hugo</title>
-      <link>https://afelipetrujillo.github.io/tags/hugo/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://afelipetrujillo.github.io/tags/hugo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>templates</title>
-      <link>https://afelipetrujillo.github.io/tags/templates/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://afelipetrujillo.github.io/tags/templates/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>themes</title>
-      <link>https://afelipetrujillo.github.io/tags/themes/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://afelipetrujillo.github.io/tags/themes/</guid>
+      <guid>http://localhost:1313/tags/opening/</guid>
       <description></description>
     </item>
     
