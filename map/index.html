@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel="stylesheet" />
+    <script src='https://npmcdn.com/csv2geojson@latest/csv2geojson.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.11/jquery.csv.js"
+        integrity="sha512-eDkr7sqAJqr3s63mdge3uTyuKVpEbzw3eji7CbGYr8VeM+NtqNajwuAiU31S0buRspDF1mZ8qTSeEZ4v/8b3Gw=="
+        crossorigin="anonymous"></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Popup styling */
+        .mapboxgl-popup {
+            padding-bottom: 5px;
+            color: #DE3943;
+        }
+
+        .mapboxgl-popup-close-button {
+            display: none;
+        }
+
+        .mapboxgl-popup-content {
+            font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+            padding: 0;
+            width: 250px;
+        }
+
+        .mapboxgl-popup-content-wrapper {
+            padding: 1%;
+        }
+
+        .mapboxgl-popup-content h3 {
+            background: rgb(61, 59, 59);
+            text-align: center;
+            color: #FFFFFF;
+            margin: 0;
+            display: block;
+            padding: 15px;
+            font-weight: 700;
+            margin-top: -5px;
+        }
+
+        .mapboxgl-popup-content h4 {
+            margin: 0;
+            display: block;
+            padding: 10px 3px 10px 10px;
+            font-weight: 400;
+        }
+
+        .mapboxgl-container {
+            cursor: pointer;
+        }
+
+        .mapboxgl-popup-anchor-top>.mapboxgl-popup-content {
+            margin-top: 3px;
+        }
+
+        .mapboxgl-popup-anchor-top>.mapboxgl-popup-tip {
+            border-bottom-color: rgb(61, 59, 59);
+        }
+    </style>
+</head>
+
+<body>
+    <div id='map'></div>
+    <script>
+        var transformRequest = (url, resourceType) => {
+            var isMapboxRequest =
+                url.slice(8, 22) === "api.mapbox.com" ||
+                url.slice(10, 26) === "tiles.mapbox.com";
+            return {
+                url: isMapboxRequest
+                    ? url.replace("?", "?pluginName=sheetMapper&")
+                    : url
+            };
+        };
+        //YOUR TURN: add your Mapbox token
+        mapboxgl.accessToken = 'pk.eyJ1IjoiY291IiwiYSI6ImNrMDVqNWN2ZTNyMnkzbW1scTc4Y2ozdzEifQ.A6A5MlflTBE3oaHY55IAow';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/cou/ckcat67tr5hem1inrwloay8vq',
+            zoom: 3
+        });
+        map.addControl(new mapboxgl.NavigationControl());
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                //url: "http://cors-anywhere.herokuapp.com/https://kc.kobotoolbox.org/api/v1/data/465127",
+                url: "http://cors-anywhere.herokuapp.com/https://kc.humanitarianresponse.info/api/v1/forms/579692.csv",
+                contentType: 'application/json',
+                headers: {
+                    "Authorization": "Basic YWZlbGlwZXRydWppbGxvOkt1c2tpczEwMTM1OTk2MzU="
+                },
+                success: function (csvData) { makeGeoJSON(csvData); }
+            });
+            function makeGeoJSON(csvData) {
+                console.log(csvData);
+                csv2geojson.csv2geojson(csvData, {
+                    latfield: '_Ingresa_en_el_mapa_e_der_generar_el_mapeo_latitude',
+                    lonfield: '_Ingresa_en_el_mapa_e_der_generar_el_mapeo_longitude',
+                    delimiter: ','
+                }, function (err, data) {
+                    map.on('load', function () {
+                        //Add the the layer to the map
+                        map.addLayer({
+                            'id': 'csvData',
+                            'type': 'heatmap',//heatmap
+                            'source': {
+                                'type': 'geojson',
+                                'data': data
+                            },
+                            /*'paint': { // "fill-color": "#00FFFF"
+                              'circle-radius': 10,
+                              'circle-color': "#DE3943"
+                            }*/
+                            'paint': {
+                                // Increase the heatmap weight based on frequency and property magnitude
+                                'heatmap-weight': [
+                                    'interpolate',
+                                    ['linear'],
+                                    ['get', 'mag'],
+                                    0,
+                                    0,
+                                    6,
+                                    1
+                                ],
+                                // Increase the heatmap color weight weight by zoom level
+                                // heatmap-intensity is a multiplier on top of heatmap-weight
+                                'heatmap-intensity': [
+                                    'interpolate',
+                                    ['linear'],
+                                    ['zoom'],
+                                    0,
+                                    1,
+                                    9,
+                                    3
+                                ],
+                                // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+                                // Begin color ramp at 0-stop with a 0-transparancy color
+                                // to create a blur-like effect.
+                                'heatmap-color': [
+                                    'interpolate',
+                                    ['linear'],
+                                    ['heatmap-density'],
+                                    0,
+                                    'rgba(33,102,172,0)',
+                                    0.2,
+                                    'rgb(103,169,207)',
+                                    0.4,
+                                    'rgb(209,229,240)',
+                                    0.6,
+                                    'rgb(253,219,199)',
+                                    0.8,
+                                    'rgb(239,138,98)',
+                                    1,
+                                    'rgb(178,24,43)'
+                                ],
+                                // Adjust the heatmap radius by zoom level
+                                'heatmap-radius': [
+                                    'interpolate',
+                                    ['linear'],
+                                    ['zoom'],
+                                    0,
+                                    2,
+                                    9,
+                                    100
+                                ],
+                                // Transition from heatmap to circle layer by zoom level
+                                'heatmap-opacity': [
+                                    'interpolate',
+                                    ['linear'],
+                                    ['zoom'],
+                                    7,
+                                    1,
+                                    9,
+                                    0
+                                ]
+                            }
+                        });
+                        // When a click event occurs on a feature in the csvData layer, open a popup at the
+                        // location of the feature, with description HTML from its properties.
+                        map.on('click', 'csvData', function (e) {
+                            var coordinates = e.features[0].geometry.coordinates.slice();
+                            //set popup text
+                            //You can adjust the values of the popup to match the headers of your CSV.
+                            // For example: e.features[0].properties.Name is retrieving information from the field Name in the original CSV.
+                            var description = `<h3>` + e.features[0].properties.Name + `</h3>`;//+ `<h4>` + `<b>` + `Address: ` + `</b>` + e.features[0].properties.Address + `</h4>` + `<h4>` + `<b>` + `Phone: ` + `</b>` + e.features[0].properties.Phone + `</h4>`;
+                            // Ensure that if the map is zoomed out such that multiple
+                            // copies of the feature are visible, the popup appears
+                            // over the copy being pointed to.
+                            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                            }
+                            //add Popup to map
+                            new mapboxgl.Popup()
+                                .setLngLat(coordinates)
+                                .setHTML(description)
+                                .addTo(map);
+                        });
+                        // Change the cursor to a pointer when the mouse is over the places layer.
+                        map.on('mouseenter', 'csvData', function () {
+                            map.getCanvas().style.cursor = 'pointer';
+                        });
+                        // Change it back to a pointer when it leaves.
+                        map.on('mouseleave', 'places', function () {
+                            map.getCanvas().style.cursor = '';
+                        });
+                        var bbox = turf.bbox(data);
+                        map.fitBounds(bbox, { padding: 50 });
+                    });
+                });
+            };
+        });
+    </script>
+</body>
+
+</html>
