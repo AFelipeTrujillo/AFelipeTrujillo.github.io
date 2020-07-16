@@ -92,6 +92,9 @@
             <td>
                 <pre id="code"></pre>
             </td>
+            <td>
+                <pre id="data" style="height: 200px;"></pre>
+            </td>
         </tr>
     </table>
     <script>
@@ -116,7 +119,6 @@
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
-                //url: "http://cors-anywhere.herokuapp.com/https://kc.kobotoolbox.org/api/v1/data/465127",
                 url: "https://cors-anywhere.herokuapp.com/https://kc.humanitarianresponse.info/api/v1/forms/579692.csv",
                 contentType: 'application/json',
                 headers: {
@@ -125,6 +127,7 @@
                 success: function (csvData) { makeGeoJSON(csvData); }
             });
             function makeGeoJSON(csvData) {
+                $("#data").text(csvData);
                 csv2geojson.csv2geojson(csvData, {
                     latfield: '_Ingresa_en_el_mapa_e_der_generar_el_mapeo_latitude',
                     lonfield: '_Ingresa_en_el_mapa_e_der_generar_el_mapeo_longitude',
