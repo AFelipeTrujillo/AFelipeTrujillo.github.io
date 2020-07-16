@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <!--<pre id="json"></pre>-->
+            </td>
+            <td>
+                <!--<pre id="geo"></pre>-->
+            </td>
+            <td>
+                <div id="map" style="height: 1000px; width: 1000px;"></div>
+            </td>
+        </tr>
+    </table>
+</body>
+<script>
+    let geojson;
+    $(() => {
+        $.ajax({
+            type: "GET",
+            url: "https://cors-anywhere.herokuapp.com/https://kc.humanitarianresponse.info/api/v1/data/579692",
+            headers: {
+                "Authorization": "Basic YWZlbGlwZXRydWppbGxvOkt1c2tpczEwMTM1OTk2MzU="
+            },
+            success: (data) => { makeGeoJSON(data); }
+        })
+    });
+
+    function makeGeoJSON(data) {
+        $("#json").text(JSON.stringify(data, undefined, 2));
+        geojson = {
+            "type": "FeatureCollection",
+            "features": []
+        }
+        data.forEach(element => {
+            geojson.features.push({
+                "type": "Feature",
+                "properties" : {
+                    "title" : element.Pais
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [element._geolocation[1], element._geolocation[0]]
+                }
+            })
+        });
+        $("#geo").text(JSON.stringify(geojson, undefined, 2));
+        createMap(geojson);
+    }
+
+    function createMap(geojson) {
+        mapboxgl.accessToken = 'pk.eyJ1IjoiY291IiwiYSI6ImNrMDVqNWN2ZTNyMnkzbW1scTc4Y2ozdzEifQ.A6A5MlflTBE3oaHY55IAow';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v10',
+            center: [-96, 37.8],
+            zoom: 3
+        });
+        map.on('load', () => {
+            /*map.addSource('points', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': geojson
+                }
+            })*/
+
+            map.addLayer({
+                'id': 'geo-points',
+                'type': 'circle',
+                'source': {
+                    'type': 'geojson',
+                    'data': geojson
+                },
+                'paint': {
+                    'circle-radius': 10,
+                    'circle-color': 'red',
+                    'circle-stroke-color': 'white',
+                    'circle-stroke-width': 1,
+                    'circle-opacity': 0.5
+                }
+            });
+
+            map.on('mouseenter', 'geo-points', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            var bbox = turf.bbox(geojson);
+            map.fitBounds(bbox, { padding: 50 });
+        });
+
+    }
+</script>
+
+</html>

@@ -8,9 +8,6 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel="stylesheet" />
     <script src='https://npmcdn.com/csv2geojson@latest/csv2geojson.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.11/jquery.csv.js"
-        integrity="sha512-eDkr7sqAJqr3s63mdge3uTyuKVpEbzw3eji7CbGYr8VeM+NtqNajwuAiU31S0buRspDF1mZ8qTSeEZ4v/8b3Gw=="
-        crossorigin="anonymous"></script>
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
     <style>
         body {
@@ -136,6 +133,7 @@
                     delimiter: ','
                 }, function (err, data) {
                     $("#code").text(JSON.stringify(data, undefined, 2));
+                    console.log(data, typeof data)
                     map.on('load', function () {
                         //Add the the layer to the map
                         map.addLayer({
