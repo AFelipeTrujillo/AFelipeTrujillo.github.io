@@ -19,10 +19,11 @@
         }
 
         #map {
-            position: absolute;
+            /*position: relative;*/
             top: 0;
             bottom: 0;
-            width: 100%;
+            width: 500px;
+            height: 600px;
         }
 
         /* Popup styling */
@@ -78,7 +79,21 @@
 </head>
 
 <body>
-    <div id='map'></div>
+    <table>
+        <tr>
+            <th>Mapa</th>
+        </tr>
+        <tr>
+            <td>
+                <div id='map'></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <pre id="code"></pre>
+            </td>
+        </tr>
+    </table>
     <script>
         var transformRequest = (url, resourceType) => {
             var isMapboxRequest =
@@ -110,12 +125,12 @@
                 success: function (csvData) { makeGeoJSON(csvData); }
             });
             function makeGeoJSON(csvData) {
-                console.log(csvData);
                 csv2geojson.csv2geojson(csvData, {
                     latfield: '_Ingresa_en_el_mapa_e_der_generar_el_mapeo_latitude',
                     lonfield: '_Ingresa_en_el_mapa_e_der_generar_el_mapeo_longitude',
                     delimiter: ','
                 }, function (err, data) {
+                    $("#code").text(JSON.stringify(data, undefined, 2));
                     map.on('load', function () {
                         //Add the the layer to the map
                         map.addLayer({
