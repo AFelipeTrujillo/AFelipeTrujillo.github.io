@@ -25,6 +25,16 @@
 </body>
 <script>
     let geojson;
+    let map;
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY291IiwiYSI6ImNrMDVqNWN2ZTNyMnkzbW1scTc4Y2ozdzEifQ.A6A5MlflTBE3oaHY55IAow';
+    map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v10',
+        center: [-96, 37.8],
+        zoom: 3
+    });
+
     $(() => {
         $.ajax({
             type: "GET",
@@ -33,7 +43,7 @@
                 "Authorization": "Basic YWZlbGlwZXRydWppbGxvOkt1c2tpczEwMTM1OTk2MzU="
             },
             success: (data) => { makeGeoJSON(data); }
-        })
+        });
     });
 
     function makeGeoJSON(data) {
@@ -59,22 +69,7 @@
     }
 
     function createMap(geojson) {
-        mapboxgl.accessToken = 'pk.eyJ1IjoiY291IiwiYSI6ImNrMDVqNWN2ZTNyMnkzbW1scTc4Y2ozdzEifQ.A6A5MlflTBE3oaHY55IAow';
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/light-v10',
-            center: [-96, 37.8],
-            zoom: 3
-        });
         map.on('load', () => {
-            /*map.addSource('points', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'FeatureCollection',
-                    'features': geojson
-                }
-            })*/
-
             map.addLayer({
                 'id': 'geo-points',
                 'type': 'circle',
@@ -89,10 +84,6 @@
                     'circle-stroke-width': 1,
                     'circle-opacity': 0.5
                 }
-            });
-
-            map.on('mouseenter', 'geo-points', function () {
-                map.getCanvas().style.cursor = 'pointer';
             });
 
             var bbox = turf.bbox(geojson);
