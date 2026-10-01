@@ -65,6 +65,7 @@ Use only these tags. Add a new tag only when no existing tag fits.
 - `python`
 - `javascript`
 - `typescript`
+- `java`
 - `go`
 - `sql`
 
