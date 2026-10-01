@@ -1,0 +1,17 @@
+site_name: Andy Dev
+site_url: https://afelipetrujillo.github.io
+site_description: Personal page
+
+theme:
+  name: material
+  language: en
+
+nav:
+  - Home: index.md
+  - About me: about.md
+  - Blog: blog/index.md
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
