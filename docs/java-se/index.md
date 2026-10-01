@@ -8,6 +8,6 @@ Notes and guides about the Java Standard Edition platform.
 - Standard library APIs
 - Practical examples for common tasks
 
-## Start here
+## Guides
 
-This section grows over time. Each page focuses on one clear question.
+- [Read console input with Scanner in Java](read-input-with-scanner.md)

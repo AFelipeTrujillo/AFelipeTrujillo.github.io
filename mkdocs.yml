@@ -10,7 +10,9 @@ nav:
   - Home: index.md
   - About me: about.md
   - Blog: blog/index.md
-  - Java SE: java-se/index.md
+  - Java SE:
+      - Overview: java-se/index.md
+      - Read input with Scanner: java-se/read-input-with-scanner.md
 
 markdown_extensions:
   - admonition
