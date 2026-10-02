@@ -10,6 +10,9 @@ nav:
   - Home: index.md
   - About me: about.md
   - Blog: blog/index.md
+  - Basics:
+      - Overview: basics/index.md
+      - What is a REPL: basics/what-is-a-repl.md
   - Java SE:
       - Overview: java-se/index.md
       - Read input with Scanner: java-se/read-input-with-scanner.md
