@@ -75,12 +75,14 @@ Use only these tags. Add a new tag only when no existing tag fits.
 - `linux`
 - `git`
 - `ci`
+- `maven`
 
 **Frameworks and libraries**
 
 - `fastapi`
 - `django`
 - `react`
+- `spring`
 - `mkdocs`
 
 **Topics**

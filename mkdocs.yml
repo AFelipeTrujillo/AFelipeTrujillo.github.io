@@ -13,6 +13,9 @@ nav:
   - Java SE:
       - Overview: java-se/index.md
       - Read input with Scanner: java-se/read-input-with-scanner.md
+  - Spring:
+      - Overview: spring/index.md
+      - Create a project with Spring Initializr: spring/create-project-with-spring-initializr.md
 
 markdown_extensions:
   - admonition
