@@ -100,3 +100,4 @@ The names change. The read-eval-print loop stays the same.
 ## Further reading
 
 - [Wikipedia: Read–eval–print loop](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)
+- [Oracle: Introduction to JShell](https://docs.oracle.com/en/java/javase/17/jshell/introduction-jshell.html)
