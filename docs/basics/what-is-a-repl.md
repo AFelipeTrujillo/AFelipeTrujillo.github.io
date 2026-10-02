@@ -2,7 +2,7 @@
 title: "What a REPL is and why it helps"
 date: 2026-10-02
 description: "Learn what a REPL is and how the read-eval-print loop helps you try code quickly."
-tags: ["tools"]
+tags: ["tools", "java"]
 status: published
 type: note
 level: beginner
@@ -51,6 +51,31 @@ That cycle is the whole idea.
 !!! note
     A REPL is great for quick checks. For larger programs, you still write normal source files.
 
+### Try it in Java with `jshell`
+
+Java includes a REPL called `jshell`.
+Open a terminal and start it:
+
+```bash
+jshell
+```
+
+Then type a few lines:
+
+```text
+jshell> int total = 2 + 3
+total ==> 5
+
+jshell> String name = "Ada"
+name ==> "Ada"
+
+jshell> System.out.println("Hello, " + name)
+Hello, Ada
+```
+
+Each line is read, evaluated, and printed before `jshell` waits again.
+Type `/exit` when you want to leave.
+
 ### Examples you may see later
 
 Different tools follow the same pattern:
@@ -68,6 +93,7 @@ The names change. The read-eval-print loop stays the same.
 
 - REPL means Read-Eval-Print Loop.
 - You type code, it runs, you see the result, then you continue.
+- In Java, try this with `jshell`.
 - Use it for fast experiments and learning.
 - Use source files when the program grows.
 
